@@ -4,7 +4,13 @@ Query.php
 ## What is Query.php?
 Query.php is a new PHP based class that allows developers to interact with the database in an easy-to-write-and-understand format. 
 
-### Setup
+## System requirements
+Here are the system requirements for Query.php: 
+* PHP version 5.3.0 or greater - running Query.php on any lower versions will result in an error message being thrown.
+* SQL based database
+* PDO module
+
+## Setup
 ##### ::setup()
 The `::setup()` method takes one parameter - an array, in which you specify credentials.
 
@@ -36,7 +42,7 @@ Query.php applies some default values to the connection credentials whenever it'
 
 If you are connecting to a database with `localhost` being the host, `root` being the username, no password, and driver being `mysql`, the only thing you'll need to provide to `::setup` is the name of the database you want to connect with.
 
-### General usage
+## General usage
 It's fairly easy to begin using Query.php with the range of methods it comes built in with. 
 
 ### 1. `::_query`
@@ -103,7 +109,7 @@ You wouldn't need to supply this key unless you're executing an `UPDATE` stateme
 ###### 9. `custom`
 Just incase you would want to write your own SQL code, you can do so via the `custom` key. You won't need to provide any other key other than `placeholders` - but that's only if you're making use of them in your SQL code. Usage: `'custom' => 'SELECT title FROM posts'`.
 
-### `::build`
+### 2. `::build`
 Query.php lets you define your own query format. Yes! That means you can finally perform SQL operations in the language that you want to! But first things first, you'll need to define a format, via the `::build` method. A format points to a callback function (also known as _closures_), that is executed when the format is processed. The `%c` placeholder is used to denote areas of varied data.
 
 ##### API:
@@ -121,7 +127,7 @@ Query::build('FETCH POSTS BY %c', function($author) {
 });
 ```
 
-### `::run`
+### 3. `::run`
 The `::run` method executes plain SQL and custom format code. That's really it.
 
 ##### API:
