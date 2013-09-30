@@ -104,7 +104,7 @@ You wouldn't need to supply this key unless you're executing an `UPDATE` stateme
 Just incase you would want to write your own SQL code, you can do so via the `custom` key. You won't need to provide any other key other than `placeholders` - but that's only if you're making use of them in your SQL code. Usage: `'custom' => 'SELECT title FROM posts'`.
 
 ### `::build`
-Query.php lets you define your own query format. Yes! That means you can finally perform SQL operations in the language that you want to! But first things first, you'll need to define a format, via the `::build` method. A format points to a callback function (_also known as *closures*_), that is executed when the format is processed. The `%c` placeholder is used to denote areas of varied data.
+Query.php lets you define your own query format. Yes! That means you can finally perform SQL operations in the language that you want to! But first things first, you'll need to define a format, via the `::build` method. A format points to a callback function (also known as _closures_), that is executed when the format is processed. The `%c` placeholder is used to denote areas of varied data.
 
 ##### API:
 ```php
