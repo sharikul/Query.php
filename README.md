@@ -14,7 +14,7 @@ First and foremost, it is vital that you get Query.php connected to the database
 ```php
 Query::setup( array(
 	'host' => 'localhost',
-	'username => 'root',
+	'username' => 'root',
 	'password' => '',
 	'database' => 'blog',
 	'driver' => 'mysql'
