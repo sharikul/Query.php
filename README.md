@@ -9,7 +9,7 @@ To ensure that Query.php works well, ensure that the following requirements are 
 * PDO Module. 
 
 # How to get started
-First and foremost, it is vital that you get Query.php connected to the database before executing any processes. You can do this via the internal `::setup` method, like so:
+First and foremost, it is vital that you get Query.php connected to the database before executing anything. You can do this via the internal `::setup` method, like so:
 
 ```php
 Query::setup( array(
