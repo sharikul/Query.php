@@ -288,8 +288,6 @@
                         $query .= ' WHERE '.$where;
                     }
 
-
-
 				} else if( $action === 'DESCRIBE') {
                     $query .= 'DESCRIBE '.$table;
                 }
