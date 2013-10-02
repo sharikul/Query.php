@@ -24,13 +24,15 @@ Query::_query('', 'posts', array(
 If this query was to be executed, you'd get every single post from the database which has been authored by _Sharikul Islam_ - but at 6 posts at a time!
 
 ## Internal helpers
-Query.php also comes built in with some helper functions that make use of `::_query` so you don't.
+Query.php also comes built in with some helper functions that interact with `::_query` so you don't have to.
 
-* **select_where**
+1. `select_where`
+
 Use this helper to select a column or a set of records based on a condition. 
 
+Usage:
 ```php
-Query::select_where('author', ':author', 'posts', 'title', array(':author' => 'Sharikul Islam');
+Query::select_where('author', ':author', 'posts', 'title', array(':author' => 'Sharikul Islam'));
 ```
 
 **Note: You aren't required to provide the placeholders array at the end if you aren't making use of them when constructing queries.**
@@ -40,5 +42,26 @@ Query::select_where('author', ':author', 'posts', 'title', array(':author' => 'S
 static function select_where($column = '', $value = '', $table = '', $specific_column = '', array $placeholders = null);
 ```
 
-* **update_where**
+2. `update_where`
 
+Use this helper to update columns based on a condition.
+
+**Required keys**: `update` (array) - Within this array, list out the columns you want to update, providing their name as the array key, and the new value as the array key value.
+
+Usage:
+```php
+Query::update_where('title', ':title', 'posts', array(
+	'placeholders' => array(':title' => 'Welcome to My Blog!'),
+	'update' => array(
+		'postbody' => 'This is the new post body',
+		'author' => 'New Author',
+		'postdate' => 'TODAY!!!'
+)));
+```
+
+**API**:
+```php
+static function update_where( $column = '', $value = '', $table = '', array $options = null);
+```
+
+**Note: In this particular helper, the placeholders array and update array must be provided within the `$options` array. 
