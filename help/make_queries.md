@@ -67,4 +67,4 @@ static function update_where( $column = '', $value = '', $table = '', array $opt
 **Note: In this particular helper, the `placeholders` and `update` array must be provided within the `$options` array.** 
 
 ## Further help & guidance
-Read through `_query.md` to get a deeper understanding of this method. 
+Read through `_query.md` to get a deeper understanding of the `::_query` method. 
