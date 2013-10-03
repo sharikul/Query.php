@@ -64,7 +64,7 @@ Query::update_where('title', ':title', 'posts', array(
 static function update_where( $column = '', $value = '', $table = '', array $options = null);
 ```
 
-**Note: In this particular helper, the placeholders array and update array must be provided within the `$options` array.** 
+**Note: In this particular helper, the `placeholders` and `update` array must be provided within the `$options` array.** 
 
 ## Further help & guidance
-Read through `_query.md` to get a deeper understanding into this method. 
+Read through `_query.md` to get a deeper understanding of this method. 

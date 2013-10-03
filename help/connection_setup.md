@@ -22,7 +22,7 @@ If you will be connecting to the database under the following conditions:
 
 * `localhost` being the host,
 * `root` being the user name,
-* No password (_although you should be setting passwords_),
+* No password - _although you should be setting passwords to databases_,
 * `mysql` being the driver
 
 The only thing you'll be required to provide is the name of the database, via the `database` key. 
