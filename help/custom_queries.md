@@ -28,7 +28,7 @@ $posts_by_sharikul = Query::run('POSTS BY Sharikul Islam');
 
 
 ## Prerequisites
-For custom queries to work, you'll need to ensure that the version of PHP you're running is at least on version **5.3.0**. Try creating queries on lower versions and you'll get an error message thrown. This is because the method makes use of [closures/anonymous functions]("http://php.net/manual/en/functions.anonymous.php").
+For custom queries to work, you'll need to ensure that the version of PHP you're running is at least on version **5.3.0**. Try creating queries on lower versions and you'll get an error message thrown. This is because the method makes use of [closures/anonymous functions](http://php.net/manual/en/functions.anonymous.php).
 
 ## Help & Guidance
 Read up on the internal `::select_where` method in `make_queries.md` if you haven't already to view the API representation.
