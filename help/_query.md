@@ -17,7 +17,7 @@ It is here where you can modify the query to be executed. The array accepts thes
 5. `limit_end` (int) - The maximum number of records to return. Defaults to **0**. 
 6. `order_by` (string) - The name of the column whose data should be used to order a set of records.
 7. `sort` (string) - The order that records should be displayed in. Defaults to **ASC** (ascending, old to new). Specify **DESC** to show records from new to old.
-8. `update` (array) - The columns whose value should be updated. **This should only be specified if the `action` is set to `update`.**
+8. `update` (array) - The columns whose value should be updated. **This should only be specified if the `action` is set to `UPDATE`.**
 9. `custom` (string) - The SQL code to be executed. **If this key is specified, do NOT provide any more keys, with the exception of `placeholders` if they are used in the query, as this could result in problems.**
 
 **Example 1: Update columns**:
