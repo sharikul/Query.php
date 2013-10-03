@@ -14,4 +14,4 @@ $get_titles = Query::run("SELECT title FROM posts");
 ```
 
 ## Notes
-If you would like to just execute normal SQL queries, you may also use the internal `::normal_sql` method, which accepts one parameter: the query.
+If you would like to just execute normal SQL queries, you may use the internal `::normal_sql` method, which accepts one parameter: the query.
