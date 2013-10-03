@@ -3,7 +3,7 @@ Query.php offers you flexibility in terms of sending queries to the connected da
 
 This is how simple you can make queries: 
 ```php
-Query::_query('title', 'posts');
+$all_titles = Query::_query('title', 'posts');
 ```
 
 If you were to have a column called _title_ in a table called _posts_, this is how you can retrieve every single value of the column. **Lovely Jubbly!**
@@ -11,7 +11,7 @@ If you were to have a column called _title_ in a table called _posts_, this is h
 But this is how `::query` is meant to be used:
 
 ```php
-Query::_query('', 'posts', array(
+$posts_by_sharikul = Query::_query('', 'posts', array(
 	'where' => 'author = :author',
 	'placeholders' => array(':author' => 'Sharikul Islam'),
 	'order_by' => 'date',
@@ -32,7 +32,7 @@ Use this helper to select a column or a set of records based on a condition.
 
 Usage:
 ```php
-Query::select_where('author', ':author', 'posts', 'title', array(':author' => 'Sharikul Islam'));
+Query::select_where('author', ':author', 'posts', 'title', '', array(':author' => 'Sharikul Islam'));
 ```
 
 **Note: You aren't required to provide the placeholders array at the end if you aren't making use of them when constructing queries.**
