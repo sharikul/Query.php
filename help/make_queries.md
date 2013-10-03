@@ -26,7 +26,7 @@ If this query was to be executed, you'd get every single post from the database 
 ## Internal helpers
 Query.php also comes built in with some helper functions that interact with `::_query` so you don't have to.
 
-1. `select_where`
+### `select_where`
 
 Use this helper to select a column or a set of records based on a condition. 
 
@@ -42,7 +42,7 @@ Query::select_where('author', ':author', 'posts', 'title', array(':author' => 'S
 static function select_where($column = '', $value = '', $table = '', $specific_column = '', array $placeholders = null);
 ```
 
-2. `update_where`
+### `update_where`
 
 Use this helper to update columns based on a condition.
 
@@ -64,4 +64,7 @@ Query::update_where('title', ':title', 'posts', array(
 static function update_where( $column = '', $value = '', $table = '', array $options = null);
 ```
 
-**Note: In this particular helper, the placeholders array and update array must be provided within the `$options` array. 
+**Note: In this particular helper, the placeholders array and update array must be provided within the `$options` array.** 
+
+## Further help & guidance
+Read through `_query.md` to get a deeper understanding into this method. 
