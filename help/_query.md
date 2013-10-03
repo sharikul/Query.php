@@ -8,7 +8,7 @@ static function _query($column = '', $table = '', array $extra_options = null);
 ```
 
 ## The `$extra_options` array
-It is here where you can modify the query to be executed. The array accepts these **nine** parameters:
+It is here where you can modify the query to be executed. The array accepts these **ten** parameters:
 
 1. `action` (string) - The operation to be performed. Defaults to `SELECT`.
 2. `where` (string) - The condition of a `WHERE` clause. Write it as is, i.e. write the clause how you would write it in plain SQL - just exclude the 'WHERE' keyword!
@@ -18,7 +18,8 @@ It is here where you can modify the query to be executed. The array accepts thes
 6. `order_by` (string) - The name of the column whose data should be used to order a set of records.
 7. `sort` (string) - The order that records should be displayed in. Defaults to **ASC** (ascending, old to new). Specify **DESC** to show records from new to old.
 8. `update` (array) - The columns whose value should be updated. **This should only be specified if the `action` is set to `UPDATE`.**
-9. `custom` (string) - The SQL code to be executed. **If this key is specified, do NOT provide any more keys, with the exception of `placeholders` if they are used in the query, as this could result in problems.**
+9. `values` (array) - the values to be inserted into their respective columns. See the example below for a better understanding. 
+10. `custom` (string) - The SQL code to be executed. **If this key is specified, do NOT provide any more keys, with the exception of `placeholders` if they are used in the query, as this could result in problems.**
 
 **Example 1: Update columns**:
 
@@ -51,5 +52,17 @@ Query::_query('', 'posts', array(
 ));
 ```
 
+**Example 3: Insert values into the database**:
+
+```php
+Query::_query('title, content', 'posts', array(
+	'action' => 'insert',
+	'values' => array(':title', ':content'),
+	'placeholders' => array(
+		':title' => 'My Post title!',
+		':content' => 'My post content'
+	)
+));
+```
 ## Notes
 If the `limit_start` parameter is specified with the `limit_end` parameter, but `limit_end` is set to zero, `::query` won't limit the number of records it returns.
