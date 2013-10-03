@@ -224,7 +224,7 @@
 						$query .= ' '.$sort;
 					}
 
-					if( !is_null($limit_start) && !is_null($limit_end) && $limit_end !== 0) {
+					if( !is_null($limit_start) && !is_null($limit_end) && !$limit_end <= 0) {
 						$query .= ' LIMIT '.$limit_start.', '.$limit_end;
 					}
 

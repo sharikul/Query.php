@@ -30,9 +30,26 @@ Query::_query('', 'posts', array(
 		':title' => 'A post title'
 	),
 	'update' => array(
-		'content' => 'Hey, I\'ve just been updated!',
+		'content' => "Hey, I've just been updated!",
 		'author' => 'DO YOU KNOW WHO I AM??? MWAH HAH HAH!',
 		'slug' => 'this-is-a-slug'
 	)
 ));
 ```
+
+**Example 2: Execute a custom query**:
+
+```php
+Query::_query('', 'posts', array(
+	'custom' => 'UPDATE posts SET content = :content, author = :author, slug = :slug WHERE title = :title',
+	'placeholders' => array(
+		':content' => "Hey, I've just been updated!",
+		':author' => 'DO YOU KNOW WHO I AM??? MWAH HAH HAH',
+		':slug' => 'this-is-a-slug',
+		':title' => 'A post title'
+	)
+));
+```
+
+## Notes
+If the `limit_start` parameter is specified with the `limit_end` parameter, but `limit_end` is set to zero, `::query` won't limit the number of records it returns.
