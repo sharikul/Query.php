@@ -1,5 +1,5 @@
 # The `::run` method
-`::run` is Query.php's alternative method(get it) of creating queries. It accepts both normal SQL queries as well as custom queries. This is the method to use in order to execute custom queries.
+`::run` is Query.php's alternative method (get it) of creating queries. It accepts both normal SQL queries as well as custom queries. This is the method to use in order to execute custom queries.
 
 ## API
 
