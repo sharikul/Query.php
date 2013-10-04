@@ -66,3 +66,34 @@ Query::_query('title, content', 'posts', array(
 ```
 ## Notes
 If the `limit_start` parameter is specified with the `limit_end` parameter, but `limit_end` is set to zero, `::query` won't limit the number of records it returns.
+
+***
+
+To get the value of a specific column from a returned array, use the internal `::get_var` method. 
+
+**API**:
+
+```php
+static function get_var( array $results, $index);
+```
+
+**Example usage**:
+
+1. Build a custom query to get a post from the database by its title,
+2. Execute the query, which will return an array,
+3. Use `::get_var` to just return the value of a returned array key.
+
+```php
+Query::build('GET: %c', function($post_title) {
+	return Query::select_where('title', $post_title, 'posts');
+});
+
+// Execute the custom query. Search for the post whose title is 'My first post'
+
+$my_first_post = Query::run('GET: My first post');
+$post_title = Query::get_var( $my_first_post, 'title');
+$post_body = Query::get_var( $my_first_post, 'content');	
+```
+
+## Help & Guidance
+Read `make_queries.md` to view the API representation of `::select_where`.  
