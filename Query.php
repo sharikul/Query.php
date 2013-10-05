@@ -1,5 +1,9 @@
 <?php 
 
+    /**
+     * @author Sharikul Islam
+     */
+
 	class Query {
 
 		// Does Query have all the required information it needs to continue? Set to false now, but change to true later on if applicable
