@@ -21,7 +21,7 @@ Here are the error messages you might see Query.php display included with their 
 
 ## _Query.php requires the PDO module to be installed._
 
-**Cause:** The copy of PHP that you're running doesn't have the PDO module pre-installed, which is the epitome of Query.php.
+**Cause:** The copy of PHP that you're running doesn't have the PDO module pre-installed.
 
 **Fix:** Provided that the version of PHP that you're running is at least **5.1.0**, follow the instructions [here](http://php.net/manual/en/pdo.installation.php) to install the PDO module. Alternatively, do get into contact with your web-host who should complete this process for you.
 
