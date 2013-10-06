@@ -11,6 +11,9 @@ class Query
     
     // Short for 'instance'. Store the PDO instance in this variable.
     private static $inst = null;
+
+	// Store the number of rows returned from the previous query here
+	public static $numrows = 0;
     
     /**
      * Return the connection instance.
@@ -39,7 +42,8 @@ class Query
     private function could_be_sql($code = '')
     {
         
-        $regex = '/(SELECT|UPDATE|DELETE|DESCRIBE|EXPLAIN|CREATE|ALTER|DROP|INSERT) (\*|.*) (FROM|SET|.*) (.*)/';
+        $regex = '/(SELECT|UPDATE|DELETE|DESCRIBE|EXPLAIN|CREATE|ALTER|DROP|INSERT|SHOW) (FROM|INTO|.*) (FROM|SET|.*) (.*)/';
+
         return (preg_match($regex, $code)) ? true : false;
     }
     
@@ -52,8 +56,14 @@ class Query
     {
         return version_compare(PHP_VERSION, '5.3.0', '>=');
     }
-    
-    private static function can_query_run()
+
+	/**
+	 * Check whether Query.php can run on the current version of PHP.
+	 *
+	 * @return boolean
+	 */
+
+	private static function can_query_run()
     {
         return version_compare(PHP_VERSION, '5.1.0', '>=');
     }
@@ -77,7 +87,7 @@ class Query
         
         if (!self::can_custom_build()) {
             
-            die(sprintf('<strong>Error</strong>: Oops, if seems like your version of PHP (%s) doesn\'t support custom formatted queries. Visit the <a href="%s">Github Docs</a> for more information on this error. Unless you are able to run PHP at version 5.3.0 or older, please do remove any <code>::build</code> instances from your source code to allow working source code to be parsed.', PHP_VERSION, '#github'));
+            die(sprintf('<strong>Error</strong>: Oops, it looks like your version of PHP (%s) doesn\'t support custom formatted queries. Visit the <a href="%s">Github Docs</a> for more information on this error. Unless you are able to run PHP at version 5.3.0 or older, please do remove any <code>::build</code> instances from your source code to allow working source code to be parsed.', PHP_VERSION, '#github'));
             
         }
         
@@ -142,6 +152,17 @@ class Query
             ), $placeholders)
         ));
     }
+
+	static function column_exists($column = '', $table = '') {
+		if( !empty($column) && !empty($table)) {
+
+			$query = self::run("SHOW COLUMNS FROM $table LIKE '$column'");
+
+			return( !empty($query)) ? true: false;
+		}
+
+		return false;
+	}
     
     /**
      * Function that executes queries, both SQL and custom formats.
@@ -166,12 +187,14 @@ class Query
             "DELETE",
             "SELECT",
             "DESCRIBE",
-            "EXPLAIN"
+            "EXPLAIN",
+	        "SHOW"
         );
         
         $explode = explode(" ", $query);
         
         if (in_array($explode[0], $valid_query_sql)) {
+
             if (self::could_be_sql($query)) {
                 return self::normal_sql($query, $placeholders);
             }
@@ -346,7 +369,7 @@ class Query
         }
         
         if (!self::can_query_run()) {
-            echo sprintf('<h1 style="font-family: sans-serif; font-weight: lighter;">Query.php isn\'t compatible with this version of PHP (%s). Please upgrade to at least 5.3.0 to continue.</h1>', PHP_VERSION);
+            echo sprintf('<h1 style="font-family: sans-serif; font-weight: lighter;">Query.php isn\'t compatible with your version of PHP (%s). Please upgrade to at least 5.1.0 to continue.</h1>', PHP_VERSION);
             exit();
         }
         
@@ -431,6 +454,10 @@ class Query
         $query = $db->prepare($sql);
         
         $query->execute($placeholders);
+
+	    self::close_connection();
+
+	    self::$numrows = count( $query->fetchAll() );
         
         return $query->fetchAll();
     }
