@@ -1,18 +1,30 @@
 <?php
 
+	/**
+	 * I hereby declare the free usage of Query.php by any persons.
+	 *
+	 * @package Query.php
+	 * @author Sharikul Islam
+	 * @authorURI http://sharikul.comyr.com
+	 * @year 2013
+	 */
+
 	class Query {
 
-		// Does Query have all the required information it needs to continue? Set to false now, but change to true later on if applicable
-		private static $setup_complete = false;
+		// Does Query have all the required information it needs to continue? Set to false now, but change to true later on if applicable.
+		protected static $setup_complete = false;
 
 		// Store all custom queries in this array.
-		private static $custom_queries = array();
+		protected static $custom_queries = array();
 
 		// Short for 'instance'. Store the PDO instance in this variable.
-		private static $inst = null;
+		protected static $inst = null;
 
-		// Store the number of rows returned from the previous query here
-		public static $numrows = 0;
+		// Store the number of rows returned from the previous query here.
+		protected static $numrows = 0;
+
+		// Store the name of the database in here during setup.
+		private static $dbname = '';
 
 		/**
 		 * Return the connection instance.
@@ -144,12 +156,42 @@
 			) );
 		}
 
+
+		/**
+		 * Check whether the specified column exists in the specified table.
+		 *
+		 * @param string $column
+		 * @param string $table
+		 *
+		 * @return bool
+		 */
+
 		static function column_exists( $column = '', $table = '' ) {
 			if ( !empty( $column ) && !empty( $table ) ) {
 
 				$query = self::run( "SHOW COLUMNS FROM $table LIKE '$column'" );
 
 				return ( !empty( $query ) ) ? true : false;
+			}
+
+			return false;
+		}
+
+
+		/**
+		 * Check whether the specified table exists in the database.
+		 *
+		 * @param string $table
+		 *
+		 * @return bool
+		 */
+
+		static function table_exists( $table = '' ) {
+			if ( !empty( $table ) && !empty( self::$dbname ) ) {
+
+				$query = Query::run( "SHOW TABLES LIKE '$table'" );
+
+				return ( !empty( $query ) );
 			}
 
 			return false;
@@ -186,7 +228,12 @@
 			if ( in_array( $explode[0], $valid_query_sql ) ) {
 
 				if ( self::could_be_sql( $query ) ) {
-					return self::normal_sql( $query, $placeholders );
+
+					$quer = self::normal_sql( $query, $placeholders );
+
+					self::$numrows = count( $quer );
+
+					return $quer;
 				}
 			} else {
 				return self::exec_build( $query );
@@ -370,6 +417,8 @@
 
 			if ( !empty( $database ) ) {
 
+				self::$dbname = $database;
+
 				// Invoke PDO! Store the instance in the $inst property
 
 				if ( class_exists( 'PDO' ) ) {
@@ -416,12 +465,28 @@
 			}
 		}
 
+
+		/**
+		 * Return the value of the specified index from the provided $results array
+		 *
+		 * @usage: Query::get_var( array('name' => 'Query.php', 'dob' => 'September 2013'), 'name')
+		 *
+		 * @param array $results
+		 * @param       $index
+		 *
+		 * @return mixed
+		 */
+
 		static function get_var( array $results, $index ) {
+
 			if ( array_key_exists( $index, $results ) ) {
 				return $results[$index];
+
 			} else if ( array_key_exists( $index, $results[0] ) ) {
 				return $results[0][$index];
 			}
+
+			return false;
 		}
 
 		/**
@@ -440,10 +505,6 @@
 			$query = $db->prepare( $sql );
 
 			$query->execute( $placeholders );
-
-			self::close_connection();
-
-			self::$numrows = count( $query->fetchAll() );
 
 			return $query->fetchAll();
 		}
@@ -464,7 +525,10 @@
 				if ( substr( $key, 0, 4 ) === substr( $query, 0, 4 ) ) {
 
 					preg_match_all( "/$key/", $query, $matches );
+
 					$args = array();
+
+					// Remove the first element as it's completely useless for our needs.
 					unset( $matches[0] );
 
 					for ( $i = 1; $i <= count( $matches ); $i++ ) {
@@ -480,6 +544,7 @@
 						}
 					}
 
+					// This will execute the closure provided, and set the parameters provided to the closure equal to the corresponding array value.
 					return call_user_func_array( $value, $args );
 
 				}
