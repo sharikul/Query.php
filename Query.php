@@ -122,6 +122,7 @@
 				$value = '"' . $value . '"';
 			}
 
+
 			return self::_query( $specific_column, $table, array(
 				'where' => $column . ' = ' . $value,
 				'placeholders' => $placeholders
@@ -143,7 +144,7 @@
 		static function update_where( $column = '', $value = '', $table = '', array $options = null ) {
 
 
-			$placeholders = ( array_key_exists( 'placeholders', $options ) && gettype( $options['placeholders'] ) === 'array' ) ? $options['placeholders'] : null;
+			$placeholders = ( array_key_exists( 'placeholders', $options ) && gettype( $options['placeholders'] ) === 'array' ) ? $options['placeholders'] : array();
 			$update       = ( array_key_exists( 'update', $options ) && gettype( $options['update'] ) === 'array' ) ? $options['update'] : null;
 
 			return self::_query( '', $table, array(
@@ -257,6 +258,7 @@
 				return false;
 			}
 
+
 			$query = '';
 
 			$column = ( empty( $column ) ) ? '*' : $column;
@@ -292,7 +294,7 @@
 						$query .= ' ORDER BY ' . $order_by;
 					}
 
-					if ( !empty( $sort ) ) {
+					if ( !empty( $sort ) && !empty($order_by)) {
 						$query .= ' ' . $sort;
 					}
 
@@ -315,9 +317,17 @@
 
 							foreach ( $values as $value ) {
 								if ( $i++ !== $val_len ) {
-									$val .= "'$value'" . ', ';
+									if( $value[0] !== ":") {
+										$val .= "'$value'" . ', ';
+									} else {
+										$val .= $value.', ';
+									}
 								} else {
-									$val .= "'$value'";
+									if( $value[0] !== ":") {
+										$val .= "'$value'";
+									} else {
+										$val .= $value;
+									}
 								}
 							}
 						}
