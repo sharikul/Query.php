@@ -4,7 +4,7 @@ Query.php is a new PHP based class that allows developers to interact with an SQ
 # System requirements
 To ensure that Query.php works well, ensure that the following requirements are met.
 
-* PHP **5.1.0** for general usage, or version **5.3.0** for custom query building is running,
+* PHP **5.1.0** for general usage, or version **5.3.0** for building custom queries,
 * MySQL or SQLite Database is the database to connect with,
 * PDO Module is installed in the copy of PHP that's running on the server. 
 
