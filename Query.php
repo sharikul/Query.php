@@ -418,7 +418,8 @@
 				exit();
 			}
 
-			$host     = ( array_key_exists( 'host', $options ) ) ? $options['host'] : 'localhost';
+			// 127.0.0.1 instead of "localhost" as if would prevent a DNS lookup thus improving connection speed, according to Alex Garrett on http://www.youtube.com/watch?v=QRPAxAtxdmQ.
+			$host     = ( array_key_exists( 'host', $options ) ) ? $options['host'] : '127.0.0.1';
 			$username = ( array_key_exists( 'username', $options ) ) ? $options['username'] : 'root';
 			$password = ( array_key_exists( 'password', $options ) ) ? $options['password'] : '';
 			$database = ( array_key_exists( 'database', $options ) ) ? $options['database'] : '';
