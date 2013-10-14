@@ -355,7 +355,7 @@
 						foreach ( $update_sets as $column => $value ) {
 							$value = ( $value[0] !== ':' ) ? '"' . $value . '"' : $value;
 							if ( $i++ !== $set_len ) {
-								$col_set .= $column . ' = ' . $value;
+								$col_set .= $column . ' = ' . $value.', ';
 							} else {
 								$col_set .= $column . ' = ' . $value;
 							}
