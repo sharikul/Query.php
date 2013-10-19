@@ -1,5 +1,5 @@
 # Building custom queries
-Query.php now makes it possible for you build your own queries. This means that you can write queries in the way that you prefer and they would execute accordingly. Query.php's internal `::build` method allows you to programmatically create custom queries.
+Query.php now makes it possible for you to build your own query format. This means that you can write queries in the way that you prefer and they would execute accordingly. Query.php's internal `::build` method allows you to programmatically create custom queries.
 
 ## API
 Here is the API representation of the `::build` method:
